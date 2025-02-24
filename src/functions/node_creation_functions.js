@@ -1,4 +1,4 @@
-const neo4j = require('neo4j-driver');
+//const neo4j = require('neo4j-driver');
 
 async function createPost(driver, text, imagen, hashtags, reposted = false) {
     /**
@@ -12,10 +12,12 @@ async function createPost(driver, text, imagen, hashtags, reposted = false) {
      */
 
     const label = "Post";
+    const time = new Date()
     const query = `
         CREATE (p:${label} {
             text: $text,
             imagen: $imagen,
+            time_stamp: $time,
             likes: 0,
             dislikes: 0,
             reposted: $reposted,
@@ -26,7 +28,7 @@ async function createPost(driver, text, imagen, hashtags, reposted = false) {
     const session = driver.session({ database: 'neo4j' });
 
     try {
-        await session.run(query, { text, imagen, reposted, hashtags });
+        await session.run(query, { text, time, imagen, reposted, hashtags });
         console.log("Post created successfully.");
     } catch (error) {
         console.error("Error executing query:", error);
@@ -75,4 +77,47 @@ async function createUser(driver, username, password, email, born, first_name, l
     } finally {
         await session.close();
     }
+}
+
+
+async function createComment(driver, text, reposted = false) {
+    /**
+     * Creates a Comment node with attributes
+     * 
+     * @param {neo4j.Driver} driver - The Neo4j driver instance.
+     * @param {string} text - The content of the post.
+     * @param {boolean} reposted - If the comment is a repost of other comment 
+     */
+
+    const time = new Date()
+
+    const label = "Comment"
+    const query = `
+        CREATE (c:${label} {
+            text: $text,
+            time_stamp: $time,
+            likes: 0,
+            dislikes: 0,
+            reposted: $reposted
+        })
+    `;
+
+    const session = driver.session({ database: 'neo4j' });
+
+    try {
+        await session.run(query, { text, time, reposted });
+        console.log("Comment created successfully.");
+    } catch (error) {
+        console.error("Error executing query:", error);
+    } finally {
+        await session.close();
+    }
+}
+
+async function createTopic(params) {
+    
+}
+
+async function createCountry(params) {
+    
 }
