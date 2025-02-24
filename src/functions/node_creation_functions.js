@@ -139,7 +139,7 @@ async function createTopic(driver, name, description) {
     const session = driver.session({ database: 'neo4j' });
 
     try {
-        await session.run(query, { text, name, description, time });
+        await session.run(query, { name, description, time });
         console.log("Topic created successfully.");
     } catch (error) {
         console.error("Error executing query:", error);
@@ -148,6 +148,37 @@ async function createTopic(driver, name, description) {
     }
 }
 
-async function createCountry(params) {
-    
+async function createCountry(driver, name, description, continent, language, country_code) {
+    /**
+     * Creates a Country node with specified attributes
+     * 
+     * @param {neo4j.Driver} driver - The Neo4j driver instance.
+     * @param {string} name - name of the topic
+     * @param {string} description - a text describing what the topic is about
+     * @param {string} continent - the name of the continent where the country is located at.
+     * @param {Array<string>} language - A list of languages that are spoke in the country.
+     * @param {string} country_code - the country code assigned to the country (ej. Guatemala: 502)
+     */
+
+    const label = "Country"
+    const query = `
+        CREATE (ct:${label} {
+            name: $name,
+            description: $description,
+            continent: $continent,
+            language: $language,
+            country_code: $country_code
+        })
+    `;
+
+    const session = driver.session({ database: 'neo4j' });
+
+    try {
+        await session.run(query, { name, description, continent, language, country_code });
+        console.log("Topic created successfully.");
+    } catch (error) {
+        console.error("Error executing query:", error);
+    } finally {
+        await session.close();
+    }
 }
