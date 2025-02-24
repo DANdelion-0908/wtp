@@ -114,8 +114,38 @@ async function createComment(driver, text, reposted = false) {
     }
 }
 
-async function createTopic(params) {
-    
+async function createTopic(driver, name, description) {
+    /**
+     * Create a Topic node with specified attributes.
+     * 
+     * @param {neo4j.Driver} driver - The Neo4j driver instance.
+     * @param {string} name - name of the topic
+     * @param {string} description - a text describing what the topic is about
+     */
+
+    const time = new Date()
+
+    const label = "Topic"
+    const query = `
+        CREATE (t:${label} {
+            name: $name,
+            description: $description,
+            time_creation: $time,
+            followers: 0,
+            ranking: 0
+        })
+    `;
+
+    const session = driver.session({ database: 'neo4j' });
+
+    try {
+        await session.run(query, { text, name, description, time });
+        console.log("Topic created successfully.");
+    } catch (error) {
+        console.error("Error executing query:", error);
+    } finally {
+        await session.close();
+    }
 }
 
 async function createCountry(params) {
