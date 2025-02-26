@@ -4,14 +4,10 @@ import React, { useEffect, useState } from 'react'
 
 export const CreatePost = () => {
   // Atributos de un post. Obtenido de Notion.
-  const [postId, setPostId] = useState(1);
+  const [postId, setPostId] = useState(1); // Implementar con ID de Neo4J o un índice Auto Increment
   const [postTitle, setPostTitle] = useState("");
   const [postText, setPostText] = useState("");
-  const [postTopics, setPostTopics] = useState([""]);
-
-  useEffect(() => {
-    console.log(postTitle, postText);
-  }, [postTitle, postText])
+  const [postTopics, setPostTopics] = useState([]);
 
   const openModal = () => {
     const modal = document.getElementById('postCreationModal') as HTMLDialogElement | null;
@@ -49,7 +45,7 @@ export const CreatePost = () => {
 
   return (
     <>
-      <button type='button' className="btn max-w-[10em]" onClick={openModal}>Crear post</button>
+      <button type='button' className="btn btn-primary max-w-[10em]" onClick={openModal}>Crear post</button>
       <dialog id="postCreationModal" className="modal">
         <div className="modal-box h-auto overflow-hidden">
           <div className="modal-action">
@@ -64,7 +60,7 @@ export const CreatePost = () => {
                 className="input input-bordered mb-[5%] w-full"
               />
               <label>Escribe tu post:</label>
-              <textarea 
+              <textarea
                 value={postText}
                 onChange={(e) => setPostText(e.target.value)}
                 className="textarea textarea-bordered w-full h-[30em] textarea-lg"
