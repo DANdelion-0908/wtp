@@ -1,10 +1,11 @@
 import React from 'react'
+import { CreatePost } from './createPost'
 
-export const LeftSideMenu = () => {
+export const LeftSideMenu = ({setProfileActive}: any) => {
   return (
-    <ul className="menu bg-base-100 rounded-box w-[40%] h-full ml-auto mr-[2%]">
+    <ul className="menu bg-base-300 rounded-box w-[50%] h-full ml-auto mr-[2%]">
         <li>
-            <a>
+            <a onClick={setProfileActive}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -38,20 +39,10 @@ export const LeftSideMenu = () => {
             </a>
         </li>
         <li>
-            <a>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-            Item 3
+            <a className='bg-primary'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill='white' viewBox="0 0 448 512" className='h-5 w-5'>
+                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
+                <CreatePost />
             </a>
         </li>
     </ul>

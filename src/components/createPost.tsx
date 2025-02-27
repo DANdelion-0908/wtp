@@ -45,9 +45,9 @@ export const CreatePost = () => {
 
   return (
     <>
-      <button type='button' className="btn btn-primary max-w-[10em]" onClick={openModal}>Crear post</button>
+      <button type='button' className="max-w-[10em] text-white text-start font-bold" onClick={openModal}>Crear post</button>
       <dialog id="postCreationModal" className="modal">
-        <div className="modal-box h-auto overflow-hidden">
+        <div className="modal-box h-auto overflow-hidden bg-gray-800">
           <div className="modal-action">
             <form method="dialog" className='h-full'>
               <h3 className="font-bold text-2xl mb-[2.5%]">Publicar</h3>
@@ -57,17 +57,17 @@ export const CreatePost = () => {
                 value={postTitle}
                 onChange={(e) => setPostTitle(e.target.value)}
                 placeholder="Título"
-                className="input input-bordered mb-[5%] w-full"
+                className="input input-bordered bg-gray-900 mb-[5%] w-full"
               />
               <label>Escribe tu post:</label>
               <textarea
                 value={postText}
                 onChange={(e) => setPostText(e.target.value)}
-                className="textarea textarea-bordered w-full h-[30em] textarea-lg"
+                className="textarea bg-gray-900 textarea-bordered w-full h-[30em] textarea-lg"
                 placeholder="Escribe aquí">
               </textarea>
               {/* if there is a button in form, it will close the modal */}
-              <button type='submit' onClick={handlePostSubmit} className="btn btn-primary mt-[3%]">Confirmar</button>
+              <button type='submit' onClick={handlePostSubmit} className="btn btn-accent mt-[3%]">Confirmar</button>
             </form>
           </div>
         </div>

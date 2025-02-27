@@ -81,27 +81,30 @@ export function Feed() {
     }
   ]);
       
-  async function fetchPosts(): Promise<boolean> {
+  async function fetchPosts() {
     // Llamada a función para obtener todos los posts
     try {
-      const response: [] = []; // Colocar nombre de la función y tal
-
-      if (response.length >= 1) {
-        const data: [] = response;
-        setPosts(data);
-
-      } else {
-        throw new Error("Ocurrió un error al obtener los posts");
-
+      const response = await fetch(``);    
+    
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
       }
-      
+  
+      const posts = await response.json();
+  
+      if (!posts || Object.keys(posts).length === 0) {
+        console.log("No se encontró el post.");
+        return null;
+        
+      }
+  
+      setPosts(posts);
+  
     } catch (error) {
-      console.error("Error al hacer la solicitud: ", error);
+      console.error("Error al hacer la solicitud:", error);
       return false;
 
     }
-
-    return true;
   }
 
   async function fetchPostByID(postID: number) {
@@ -130,26 +133,29 @@ export function Feed() {
   }
   
 
-  async function fetchComments(postID: number): Promise<boolean> {
+  async function fetchComments(postID: number) {
     try {
-      const response: [] = [];
-
-      if (response.length >= 1) {
-        const data: [] = response;
-        setComments(data);
-
-      } else {
-        throw new Error("Ocurrió un error al obtener los comentarios.");
-
+      const response = await fetch(``);    
+    
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
       }
-
+  
+      const comments = await response.json();
+  
+      if (!comments || Object.keys(comments).length === 0) {
+        console.log("No se encontró el comments.");
+        return null;
+        
+      }
+  
+      setComments(comments);
+  
     } catch (error) {
-      console.error("Error al hacer la solicitud: ", error);
+      console.error("Error al hacer la solicitud:", error);
       return false;
 
     }
-
-    return true;
   }
 
   const handleComments = () => {
@@ -181,7 +187,7 @@ export function Feed() {
           <p>No se encontró ningún post</p>
         ) : (
           posts.map((post, index) => (
-            <div className="card card-side bg-base-100 shadow-xl h-auto flex flex-col mb-[2%]" key={index}>
+            <div className="card card-side bg-base-300 shadow-xl h-auto flex flex-col mb-[2%]" key={index}>
               <div className="card-body flex flex-row items-center">
                 <img
                   src={post.profilePicture}
@@ -193,7 +199,7 @@ export function Feed() {
                 <h3>{post.user}</h3>
               </div>
               <h2 className="card-title ml-5">{post.title}</h2>
-              <textarea readOnly value={post.body} className="textarea"></textarea>
+              <textarea readOnly value={post.body} className="textarea bg-inherit"></textarea>
               <div className="divider divider-info w-[98%] self-center"></div>
               <PostInteraction
                 handleComments={handleComments}
@@ -208,7 +214,7 @@ export function Feed() {
       ) : (
         selectedPost && (
           <div>
-            <div className="card card-side bg-base-100 shadow-xl h-auto flex flex-col mb-[8%]">
+            <div className="card card-side bg-base-300 shadow-xl h-auto flex flex-col mb-[8%]">
               <div className="card-body flex flex-row items-center">
                 <img
                   src={selectedPost.profilePicture}
@@ -220,7 +226,7 @@ export function Feed() {
                 <h3>{selectedPost.user}</h3>
               </div>
               <h2 className="card-title ml-5">{selectedPost.title}</h2>
-              <textarea readOnly value={selectedPost.body} className="textarea"></textarea>
+              <textarea readOnly value={selectedPost.body} className="textarea bg-inherit"></textarea>
               <div className="divider divider-info w-[98%] self-center"></div>
               <PostInteraction
                 handleComments={handleComments}
@@ -236,7 +242,7 @@ export function Feed() {
                   <textarea
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    className="textarea textarea-bordered w-full h-auto textarea-lg"
+                    className="textarea textarea-bordered w-full bg-base-900 h-auto textarea-lg"
                     placeholder="Escribe aquí">
                   </textarea>
                   <button type='submit' onClick={() => console.log("Comentario publicado: ", commentText)} className="btn btn-primary mt-[3%]">Publicar comentario</button>
@@ -246,8 +252,8 @@ export function Feed() {
               {/* Mostrar los comentarios si existen */}
               {comments.length > 0 ? (
                 comments.map((singleComment, index) => (
-                  <div className="card card-side bg-base-100 shadow-xl h-auto flex flex-col rounded-none" key={index}>
-                    <div className="divider divider-primary w-[98%] self-center"></div>
+                  <div className="card card-side bg-inherit shadow-xl h-auto flex flex-col rounded-none" key={index}>
+                    <div className="divider divider-info w-[98%] self-center"></div>
                     <div className="card-body flex flex-row items-center">
                       <img
                         src={singleComment.profilePicture}

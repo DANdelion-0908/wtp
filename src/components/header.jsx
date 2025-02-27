@@ -1,38 +1,32 @@
 import React from 'react'
 
-export const Header = () => {
+export const Header = ({handleProfile, setProfileActive}) => {
   return (
-    <div className="navbar bg-base-100 absolute top-0 z-10">
-        <div className="flex-1">
-            <img src="favicon.png" width={"3%"} alt="Ícono de la app"/>
-            <a className="btn btn-ghost text-xl">What The Post?!</a>
-        </div>
-        <div className="flex-none gap-2">
-            <div className="form-control">
-            <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+    <>
+
+        <div className="navbar bg-base absolute bg-base-300 top-0 z-10">
+            <div className="flex-1">
+                <img src="favicon.png" width={"3%"} alt="Ícono de la app"/>
+                <a className="btn btn-ghost text-xl" onClick={setProfileActive}>What The Post?!</a>
             </div>
-            <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full">
-                <img
-                    alt="Tailwind CSS Navbar component"
-                    src="/eula.jpg" />
+            <div className="flex-none gap-2">
+                <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <div className="w-10 rounded-full">
+                    <img
+                        alt="Tailwind CSS Navbar component"
+                        src="/eula.jpg" />
+                    </div>
+                </div>
+                <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-gray-600 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                    <li><a className="justify-between" onClick={handleProfile}>Perfil</a></li>
+                    <li><a>Cerrar sesión</a></li>
+                </ul>
                 </div>
             </div>
-            <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                <li>
-                <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                </a>
-                </li>
-                <li><a>Settings</a></li>
-                <li><a>Logout</a></li>
-            </ul>
-            </div>
         </div>
-    </div>
+    </>
   )
 }
