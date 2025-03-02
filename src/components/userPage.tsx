@@ -153,7 +153,7 @@ export const UserPage = ({
                     <p>No se encontró ningún post</p>
                 ) : (
                     posts.map((post, index) => (
-                        <div className='card bg-base-200 mb-[2%] w-[100%] shadow-xl'>
+                        <div className='card bg-base-200 mb-[2%] w-[100%] shadow-xl' key={index}>
                             <div className="card-body flex flex-row items-center">
                                 <img
                                 src={post.profilePicture}

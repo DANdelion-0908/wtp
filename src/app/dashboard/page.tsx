@@ -1,14 +1,16 @@
 'use client'
 
-import { Feed } from '@/components/feed'
+import Feed from '@/components/feed'
 import { LeftSideMenu } from '@/components/leftSideMenu'
 import { RightSideMenu } from '@/components/rightSideMenu'
 import { Header} from '@/components/header'
 import React, { useState } from 'react'
 import { UserPage } from '@/components/userPage'
+import { useRouter } from 'next/navigation'
 
-export const Dashboard = () => {
+export default function Dashboard({handleAuth}: any) {
   const [isProfileActive, setProfileActive] = useState(true);
+  const router = useRouter();
 
   const handleProfile = () => {
     switch (isProfileActive) {
@@ -24,11 +26,11 @@ export const Dashboard = () => {
 
   const handleFeed = () => {
     setProfileActive(false);
+    
   }
-
   return (
     <>
-      <Header handleProfile={handleProfile} setProfileActive={handleFeed}/>
+      <Header handleProfile={handleProfile} setProfileActive={handleFeed} handleAuth={handleAuth}/>
       <div className='flex flex-row mt-auto overflow-y-hidden fixed top-[10%] h-[100vh] w-full'>
         <div className='w-[30%] h-auto'>
           <LeftSideMenu setProfileActive={handleFeed}/>

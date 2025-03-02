@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { PostInteraction } from './postInteraction';
-import { CommentInteraction } from './commentInteraction';
+import CommentInteraction from './commentInteraction';
 
-export function Feed() {
+export default function Feed() {
   const [posts, setPosts] = useState([
     {
       "id": 1,

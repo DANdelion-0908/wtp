@@ -8,13 +8,13 @@ interface CommentInteractionProps {
   isDisliked: boolean;
 }
 
-export const CommentInteraction = ({
+export default function CommentInteraction({
   handleComments,
   likesCount: initialLikes,
   sharedCount: initialShares,
   isLiked: initialIsLiked,
   isDisliked: initialIsDisliked,
-}: CommentInteractionProps) => {
+}: CommentInteractionProps) {
   
   const [likes, setLikes] = useState(initialLikes);
   const [shares, setShares] = useState(initialShares);
