@@ -1,152 +1,63 @@
 import React, { useState } from 'react'
 
-interface UserPageProps {
-    currentProfilePicture: string,
-    currentUserName: string
-}
+export const UserPage = () => {
+    const [user, setUser] = useState({
+        "password":"cF0pUQ&)3@",
+        "followers":800701,
+        "user_name":"vhintze25",
+        "born":"11/4/2005",
+        "following":42915,
+        "genre":"F",
+        "verified":true,
+        "last_name":"Hintze",
+        "id":1078,
+        "first_name":"Verena",
+        "email":"vhintze25@dagondesign.com"
+    });
 
-export const UserPage = ({
-    currentProfilePicture,
-    currentUserName
-}: UserPageProps) => {
-    const [profilePicture, setProfilePicture] = useState(currentProfilePicture);
-    const [userName, setUsername] = useState(currentUserName);
     const [posts, setPosts] = useState([
         {
             "id": 1,
             "profilePicture": "/eula.jpg",
-            "user": "dandelion",
+            "user": user.user_name,
+            "verified": user.verified,
             "title": "Mi primer post",
             "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
             "likesCount": 6,
             "dislikesCount": 8,
             "sharedCount": 9,
             "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 2,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 3,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 4,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 4,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 4,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 4,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 4,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
-          {
-            "id": 4,
-            "profilePicture": "/eula.jpg",
-            "user": "dandelion",
-            "title": "Mi primer post",
-            "body": "¡Hola, Mundo! Estoy probando a escribir un texto medianamente largo y creíble.",
-            "likesCount": 6,
-            "dislikesCount": 8,
-            "sharedCount": 9,
-            "hashtags": ["greeting", "new", "UwU"]
-          },
+          }
     ]);
-
-    async function fetchPostsByUser(user: string) {
-        try {
-        const response = await fetch(``);    
-        
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
-    
-        const posts = await response.json();
-    
-        if (!posts || Object.keys(posts).length === 0) {
-            console.log("No se encontró el posts.");
-            return null;
-            
-        }
-    
-        setPosts(posts);
-    
-        } catch (error) {
-            console.error("Error al hacer la solicitud:", error);
-            return false;
-    
-        }
-    }
 
     return (
         <div className="card w-[40%] pb-[5%] h-full overflow-auto shadow-xl">
                 <div className='bg-primary w-[40%] flex gap-5 fixed z-10 rounded-xl'>
                     <img
-                    src={currentProfilePicture}
-                    className='rounded-xl'
-                    width={"20%"}
-                    alt="Profile Picture" />
-                    <h2 className="card-title font-bold text-white">{currentUserName}</h2>
+                        src="/eula.jpg"
+                        className='rounded-xl'
+                        width={"20%"}
+                        alt="Profile Picture" 
+                    />
+                    <div className='flex flex-col justify-end items-start gap-[10%] w-full'>
+                        <div className='flex flex-col gap-[1%]'>
+                            <div className='flex'>
+                                <h2 className="card-title font-bold self-start text-white">{user.first_name} {user.last_name}</h2>
+                                <img 
+                                    src={user.verified === true ? "/verified.png" : "/nothing.png"}
+                                    alt="Ícono de cuenta verificada"
+                                    width={"5%"}
+                                />
+                            </div>
+                            <p>{user.user_name}</p>
+                        </div>
+                        <div className='flex flex-wrap w-full gap-[5%]'>
+                            <p>Seguidores: {user.followers}</p>
+                            <p>Seguidos: {user.following}</p>
+                            <p>Nacido: {user.born}</p>
+                            <p>Género: {user.genre}</p>
+                        </div>
+                    </div>
                 </div>
             <div className="card-body bg-base-300 mt-[20%]">
                 {posts.length === 0 ? (

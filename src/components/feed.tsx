@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import { PostInteraction } from './postInteraction';
 import CommentInteraction from './commentInteraction';
+import { fetchPosts } from '@/app/functions/posts';
+import { fetchComments } from '@/app/functions/comments';
 
 export default function Feed() {
   const [posts, setPosts] = useState([
@@ -17,29 +19,16 @@ export default function Feed() {
       "sharedCount": 9,
       "hashtags": ["greeting", "new", "UwU"]
     },
-
     {
       "id": 2,
       "profilePicture": "/eula.jpg",
-      "user": "Max",
-      "title": "¿Qué pasó con los cofres Hextech?",
-      "body": "¡¡¡¡¡¡RIOT!!!!!!",
-      "likesCount": 50,
-      "dislikesCount": 1,
-      "sharedCount": 25,
-      "hashtags": ["hate", "leagueoflegends", "gaming"]
-    },
-
-    {
-      "id": 3,
-      "profilePicture": "/eula.jpg",
-      "user": "Ana",
-      "title": "Ayuda con Linux",
-      "body": "No puedo instalar Linux en mi equipo, siempre me sale un error relacionado con Bitlocker.",
-      "likesCount": 1,
-      "dislikesCount": 0,
-      "sharedCount": 0,
-      "hashtags": ["help", "linux", "OS"]
+      "user": "dandelion",
+      "title": "Mi primer post",
+      "body": "¡Hola, Mundo! hiju9efgrhiju9efrhijuefrhijnuef efrhinuefrhijudefdhijouedfhijou iuhnefrwbhijnuefrbhijnudefvibhjndefvbhijn",
+      "likesCount": 6,
+      "dislikesCount": 8,
+      "sharedCount": 9,
+      "hashtags": ["greeting", "new", "UwU"]
     }
   ]); // Valores de prueba
   
@@ -69,99 +58,12 @@ export default function Feed() {
       "disLikesCount": 1,
       "sharedCount": 5
     },
-    
-    {
-      "profilePicture": "eula.jpg",
-      "user": "dandelion",
-      "text": "Qué mal.",
-      "timeStamp": "25/03/2025 18:01",
-      "likesCount": 8,
-      "disLikesCount": 100,
-      "sharedCount": 0
-    }
   ]);
-      
-  async function fetchPosts() {
-    // Llamada a función para obtener todos los posts
-    try {
-      const response = await fetch(``);    
-    
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-  
-      const posts = await response.json();
-  
-      if (!posts || Object.keys(posts).length === 0) {
-        console.log("No se encontró el post.");
-        return null;
-        
-      }
-  
-      setPosts(posts);
-  
-    } catch (error) {
-      console.error("Error al hacer la solicitud:", error);
-      return false;
-
-    }
-  }
-
-  async function fetchPostByID(postID: number) {
-    try {
-      const response = await fetch(``);    
-    
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-  
-      const post = await response.json();
-  
-      if (!post || Object.keys(post).length === 0) {
-        console.log("No se encontró el post.");
-        return null;
-        
-      }
-  
-      setSelectedPost(post);
-  
-    } catch (error) {
-      console.error("Error al hacer la solicitud:", error);
-      return false;
-
-    }
-  }
-  
-
-  async function fetchComments(postID: number) {
-    try {
-      const response = await fetch(``);    
-    
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-  
-      const comments = await response.json();
-  
-      if (!comments || Object.keys(comments).length === 0) {
-        console.log("No se encontró el comments.");
-        return null;
-        
-      }
-  
-      setComments(comments);
-  
-    } catch (error) {
-      console.error("Error al hacer la solicitud:", error);
-      return false;
-
-    }
-  }
 
   const handleComments = () => {
     if (!isCommentActive) {
       setCommentActive(true);
-
+      
     } else {
       setCommentActive(false);
 
@@ -170,14 +72,23 @@ export default function Feed() {
   }
 
   useEffect(() => {
-    fetchPosts();
-  }, [])
+    const fetchData = async () => {
+      const data = await fetchPosts();
+      setPosts(data);
+
+    };
+
+    //fetchData();
+  }, []);
 
   useEffect(() => {
-    if (selectedPost.id != 0) {
-      fetchComments(selectedPost.id);
+    const fetchData = async () => {
+      const data = await fetchComments(selectedPost.id);
+      setComments(data);
 
-    }
+    };
+
+    //fetchData();
   }, [isCommentActive === true])
 
   return (

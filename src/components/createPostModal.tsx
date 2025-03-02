@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react'
+import { createPost } from '@/app/functions/posts';
 
-export const CreatePost = () => {
+export const CreatePostModal = () => {
   // Atributos de un post. Obtenido de Notion.
-  const [postId, setPostId] = useState(1); // Implementar con ID de Neo4J o un índice Auto Increment
   const [postTitle, setPostTitle] = useState("");
+  const [postImage, setPostImage] = useState("");
   const [postText, setPostText] = useState("");
-  const [postTopics, setPostTopics] = useState([]);
+  const [postTopics, setPostTopics] = useState("");
 
   const openModal = () => {
     const modal = document.getElementById('postCreationModal') as HTMLDialogElement | null;
@@ -28,6 +29,8 @@ export const CreatePost = () => {
   const handlePostSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const parsedTopics = postTopics.split(",");
+
     if (!postTitle.trim() || !postText.trim()){
       alert("Asegúrate de llenar todos los campos.");
       return;
@@ -37,6 +40,8 @@ export const CreatePost = () => {
       title: postTitle,
       text: postText
     })
+
+    createPost(localStorage.getItem("userName"), postText, postImage, parsedTopics, 0);
 
     setPostTitle("");
     setPostText("");
@@ -63,9 +68,17 @@ export const CreatePost = () => {
               <textarea
                 value={postText}
                 onChange={(e) => setPostText(e.target.value)}
-                className="textarea bg-gray-900 textarea-bordered w-full h-[30em] textarea-lg"
+                className="textarea bg-gray-900 mb-[5%] marker:textarea-bordered w-full h-[20em] textarea-lg"
                 placeholder="Escribe aquí">
               </textarea>
+              <label>Ingresa los temas separados por comas: </label>
+              <input
+                type="text"
+                value={postTopics}
+                onChange={(e) => setPostTopics(e.target.value)}
+                placeholder="tema1, tema2, tema3"
+                className="input input-bordered bg-gray-900 w-full"
+              />
               {/* if there is a button in form, it will close the modal */}
               <button type='submit' onClick={handlePostSubmit} className="btn btn-accent mt-[3%]">Confirmar</button>
             </form>

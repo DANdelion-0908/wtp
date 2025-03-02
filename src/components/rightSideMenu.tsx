@@ -1,5 +1,4 @@
 import React from 'react'
-import { CreatePost } from './createPost'
 
 export const RightSideMenu = () => {
   return (
