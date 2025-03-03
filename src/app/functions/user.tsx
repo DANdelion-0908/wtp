@@ -1,6 +1,6 @@
 export async function fetchPostsByUser(user: string) {
     try {
-    const response = await fetch(``);    
+    const response = await fetch(`https://backend-wtp.vercel.app/api/get-posts-user/${user}`);    
     
     if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
