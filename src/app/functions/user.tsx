@@ -25,17 +25,12 @@ export async function fetchPostsByUser(user: string) {
 export async function fetchUser(userName: string) {
     try {
         const response = await fetch(`https://backend-wtp.vercel.app/api/get-user/${userName}`);    
-        
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
     
         const user = await response.json();
     
         if (!user || Object.keys(user).length === 0) {
-            console.log("No se encontró el usuario.");
+            console.log("Error al buscar usuario");
             return null;
-            
         }
     
         return user;
