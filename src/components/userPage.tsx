@@ -80,7 +80,7 @@ export const UserPage = () => {
         getUserFromStorage();
     }, []);
 
-    const handleSaveCountry = (countryId: number, countryName: string) => {
+    const handleSaveData = (countryId: number, countryName: string) => {
         console.log("País seleccionado (ID):", countryId);
         console.log("Nombre del país:", countryName);
         setCountryName(countryName); // Actualizar el nombre del país en la interfaz
@@ -131,7 +131,7 @@ export const UserPage = () => {
                         <EditUserModal
                             isOpen={isModalOpen}
                             onClose={() => setIsModalOpen(false)}
-                            onSave={handleSaveCountry}
+                            onSave={handleSaveData}
                             username={username} 
                         />
                     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCountries } from '@/app/functions/country';
+import { changeUserCountry } from '@/app/functions/country';
 
 interface Country {
     continent: string;
@@ -13,7 +14,7 @@ interface Country {
 interface EditUserModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSave: (countryId: number, countryName: string) => void; // Devolver el nombre del país
+    onSave: (countryId: number, countryName: string) => void;
     username: string;
 }
 
@@ -35,10 +36,12 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, o
         gettingCountries();
     }, []);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (selectedCountry !== null && countries) {
             const selectedCountryData = countries.find((country) => country.id === selectedCountry);
             if (selectedCountryData) {
+
+                await changeUserCountry(username, selectedCountryData.name)
                 onSave(selectedCountry, selectedCountryData.name); // Devolver el ID y el nombre del país
                 onClose();
             }
@@ -52,7 +55,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, o
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-lg w-[30%]">
-                <h2 className="text-xl font-bold mb-4">Editar País</h2>
+                <h2 className="text-xl font-bold mb-4">Editar</h2>
                 <p className="mb-4">Editando el perfil de: <strong>{username}</strong></p> {/* Mostrar el username */}
                 <select
                     className="select select-bordered w-full mb-4 text-black"
@@ -60,11 +63,12 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, o
                     value={selectedCountry || ""}
                 >
                     <option value="">Selecciona un país</option>
-                    {countries && countries.map((country) => (
-                        <option key={country.id} value={country.id}>
+                    {countries && countries.map((country, index) => (
+                        <option key={`${country.id}-${index}`} value={country.id}>
                             {country.name}
                         </option>
                     ))}
+
                 </select>
                 <div className="flex justify-end gap-4">
                     <button
