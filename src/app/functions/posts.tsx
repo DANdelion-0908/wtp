@@ -8,20 +8,20 @@
         }
       });   
       
-      console.log("ijncdeiucdijn", response)
-    
+      
       if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
       }
-  
+      
       const posts = await response.json();
-  
+      
       if (!posts || Object.keys(posts).length === 0) {
         console.log("No se encontró el post.");
         return null;
         
       }
-
+      
+      console.log("ijncdeiucdijn", posts)
       return posts;
       
     } catch (error) {
@@ -32,7 +32,7 @@
 
   export async function fetchPostByID(postID: number) {
     try {
-      const response = await fetch(`https://backend-wtp.vercel.app/api/`, { // Falta
+      const response = await fetch(`https://backend-wtp.vercel.app/api/${postID}`, { // Falta
         method: 'GET',
         headers: {
           'Content-type': 'application/json'

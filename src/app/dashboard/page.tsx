@@ -44,7 +44,7 @@ export default function Dashboard({ handleAuth }: any) {
           </>
         ) : (
           <UserPage
-            currentProfilePicture='/eula.jpg'
+            currentProfilePicture='/user.svg'
             currentUserName='dandelion' />
         )}
         <div className='w-[30%] h-full flex flex-col items-center text-center'>

@@ -7,58 +7,13 @@ import { fetchPosts } from '@/app/functions/posts';
 import { fetchComments } from '@/app/functions/comments';
 
 export default function Feed() {
-  const [posts, setPosts] = useState([
-    {
-      "id": 1,
-      "profilePicture": "/eula.jpg",
-      "user": "dandelion",
-      "title": "Mi primer post",
-      "body": "¡Hola, Mundo! hiju9efgrhiju9efrhijuefrhijnuef efrhinuefrhijudefdhijouedfhijou iuhnefrwbhijnuefrbhijnudefvibhjndefvbhijn",
-      "likesCount": 6,
-      "dislikesCount": 8,
-      "sharedCount": 9,
-      "hashtags": ["greeting", "new", "UwU"]
-    },
-    {
-      "id": 2,
-      "profilePicture": "/eula.jpg",
-      "user": "dandelion",
-      "title": "Mi primer post",
-      "body": "¡Hola, Mundo! hiju9efgrhiju9efrhijuefrhijnuef efrhinuefrhijudefdhijouedfhijou iuhnefrwbhijnuefrbhijnudefvibhjndefvbhijn",
-      "likesCount": 6,
-      "dislikesCount": 8,
-      "sharedCount": 9,
-      "hashtags": ["greeting", "new", "UwU"]
-    }
-  ]); // Valores de prueba
+  const [posts, setPosts] = useState([]);
   
   const [isCommentActive, setCommentActive] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [selectedPost, setSelectedPost] = useState(
-    {
-      "id": 1,
-      "profilePicture": "/eula.jpg",
-      "user": "dandelion",
-      "title": "Mi primer post",
-      "body": "¡Hola, Mundo! hiju9efgrhiju9efrhijuefrhijnuef efrhinuefrhijudefdhijouedfhijou iuhnefrwbhijnuefrbhijnudefvibhjndefvbhijn",
-      "likesCount": 6,
-      "dislikesCount": 8,
-      "sharedCount": 9,
-      "hashtags": ["greeting", "new", "UwU"]
-    }
-  );
+  const [selectedPost, setSelectedPost] = useState({});
 
-  const [comments, setComments] = useState([
-    {
-      "profilePicture": "eula.jpg",
-      "user": "Jorge",
-      "text": "Qué bien.",
-      "timeStamp": "25/02/2025 22:25",
-      "likesCount": 2,
-      "disLikesCount": 1,
-      "sharedCount": 5
-    },
-  ]);
+  const [comments, setComments] = useState([]);
 
   const handleComments = () => {
     if (!isCommentActive) {
@@ -74,25 +29,27 @@ export default function Feed() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchPosts();
-      setPosts(data);
-
+      setPosts(data.posts);
+      console.log("hijnuyftvijufcervuij", data.posts);
+      
     };
 
-    //fetchData();
+    fetchData();
   }, []);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchComments(selectedPost.id);
+      const data = await fetchComments(3019);
       setComments(data);
-
+      console.log("ñañañañañañ: ", data)
     };
 
-    //fetchData();
+    fetchData();
   }, [isCommentActive === true])
 
   return (
     <>
+      {console.log(posts)}
       {isCommentActive === false ? (
         posts.length === 0 ? (
           <p>No se encontró ningún post</p>
@@ -101,21 +58,20 @@ export default function Feed() {
             <div className="card card-side bg-base-300 shadow-xl h-auto flex flex-col mb-[2%]" key={index}>
               <div className="card-body flex flex-row items-center">
                 <img
-                  src={post.profilePicture}
+                  src="/user.svg"
                   className="rounded-[50%]"
                   alt="User PFP"
                   width={70}
                   height={70}
                 />
-                <h3>{post.user}</h3>
+                <h3>{post.author.user_name}</h3>
               </div>
-              <h2 className="card-title ml-5">{post.title}</h2>
-              <textarea readOnly value={post.body} className="textarea bg-inherit"></textarea>
+              <textarea readOnly value={post.post.text} className="textarea bg-inherit"></textarea>
               <div className="divider divider-info w-[98%] self-center"></div>
               <PostInteraction
                 handleComments={handleComments}
-                likesCount={post.likesCount - post.dislikesCount}
-                sharedCount={post.sharedCount}
+                likesCount={post.post.likes}
+                disLikesCount={post.post.dislikes}
                 isLiked={false}
                 isDisliked={false}
               />
@@ -123,7 +79,7 @@ export default function Feed() {
           ))
         )
       ) : (
-        selectedPost && (
+        selectedPost ? (
           <div>
             <div className="card card-side bg-base-300 shadow-xl h-auto flex flex-col mb-[8%]">
               <div className="card-body flex flex-row items-center">
@@ -161,7 +117,7 @@ export default function Feed() {
               </div>
               <h1 className='ml-[2%] text-3xl font-bold'>Comentarios</h1>
               {/* Mostrar los comentarios si existen */}
-              {comments.length > 0 ? (
+              {comments && comments.length > 0 ? (
                 comments.map((singleComment, index) => (
                   <div className="card card-side bg-inherit shadow-xl h-auto flex flex-col rounded-none" key={index}>
                     <div className="divider divider-info w-[98%] self-center"></div>
@@ -187,12 +143,13 @@ export default function Feed() {
                   </div>
                 ))
               ) : (
-                <p>Cuanto vacío.</p>
+                <p className='self-center p-20'>Cuánto vacío...</p>
               )}
             </div>
   
           </div>
-        )
+        ) : 
+        <p>A</p>
       )}
     </>
   );

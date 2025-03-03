@@ -13,7 +13,8 @@
         return null;
         
       }
-  
+      
+      console.log("ÑEÑEÑEÑE: ", comments)
       return comments;
   
     } catch (error) {

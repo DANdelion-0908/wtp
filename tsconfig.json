@@ -23,6 +23,6 @@
     },
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/functions/posts.tsx", "src/components/feed.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/functions/posts.tsx", "src/components/feed.jsx", "src/components/postInteraction.jsx"],
   "exclude": ["node_modules"]
 }

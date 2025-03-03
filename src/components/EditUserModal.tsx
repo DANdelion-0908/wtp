@@ -12,13 +12,11 @@ interface Country {
 }
 
 interface EditUserModalProps {
-    isOpen: boolean;
-    onClose: () => void;
     onSave: (countryId: number, countryName: string) => void;
     username: string;
 }
 
-export const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, onSave, username }) => {
+export const EditUserModal: React.FC<EditUserModalProps> = ({ onSave, username }) => {
     const [selectedCountry, setSelectedCountry] = useState<number | null>(null);
     const [countries, setCountries] = useState<Country[] | null>(null);
 
@@ -43,48 +41,48 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, o
 
                 await changeUserCountry(username, selectedCountryData.name)
                 onSave(selectedCountry, selectedCountryData.name); // Devolver el ID y el nombre del país
-                onClose();
+                document.getElementById('userEditModal').close()
             }
         } else {
             alert("Por favor, selecciona un país.");
+            return;
         }
     };
 
-    if (!isOpen) return null;
-
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg w-[30%]">
+        <dialog id='userEditModal' className='modal'>
+            <div className='modal-box h-auto overflow-hidden bg-gray-800'>
                 <h2 className="text-xl font-bold mb-4">Editar</h2>
                 <p className="mb-4">Editando el perfil de: <strong>{username}</strong></p> {/* Mostrar el username */}
-                <select
-                    className="select select-bordered w-full mb-4 text-black"
-                    onChange={(e) => setSelectedCountry(Number(e.target.value))}
-                    value={selectedCountry || ""}
-                >
-                    <option value="">Selecciona un país</option>
-                    {countries && countries.map((country, index) => (
-                        <option key={`${country.id}-${index}`} value={country.id}>
-                            {country.name}
-                        </option>
-                    ))}
+                    <select
+                        className="select select-bordered w-full text-white mb-4 text-black"
+                        onChange={(e) => setSelectedCountry(Number(e.target.value))}
+                        value={selectedCountry || ""}
+                        >
+                        <option value="">Selecciona un país</option>
+                        {countries && countries.map((country, index) => (
+                            <option key={`${country.id}-${index}`} value={country.id}>
+                                {country.name}
+                            </option>
+                        ))}
 
-                </select>
-                <div className="flex justify-end gap-4">
-                    <button
-                        className="btn btn-primary"
-                        onClick={onClose}
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        className="btn btn-accent"
-                        onClick={handleSave}
-                    >
-                        Guardar
-                    </button>
-                </div>
+                    </select>
+                    <div className="flex justify-end gap-4">
+                        <button
+                            className="btn btn-ghots"
+                            onClick={() => document.getElementById('userEditModal').close()}
+                            >
+                            Cancelar
+                        </button>
+                        <button
+                        type='submit'
+                            className="btn btn-accent"
+                            onClick={handleSave}
+                            >
+                            Guardar
+                        </button>
+                    </div>
             </div>
-        </div>
+        </dialog>
     );
 };

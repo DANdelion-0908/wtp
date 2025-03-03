@@ -20,7 +20,7 @@ export const Header = ({handleProfile, setProfileActive, handleAuth}) => {
                         <div className="w-10 rounded-full">
                         <img
                             alt="Tailwind CSS Navbar component"
-                            src="/eula.jpg" />
+                            src="/user.svg" />
                         </div>
                     </div>
                     <ul

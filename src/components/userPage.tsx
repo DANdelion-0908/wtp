@@ -5,7 +5,7 @@ import { EditUserModal } from './EditUserModal';
 interface User {
     password: string;
     followers: number;
-    gender: string;
+    genre: string;
     user_name: string;
     born: string;
     following: number;
@@ -42,8 +42,15 @@ export const UserPage = () => {
     const [country, setCountry] = useState<Country | null>(null); // Estado para el país
     const [posts1, setPosts1] = useState<Post[] | null>(null); // Estado para los posts
     const [countryName, setCountryName] = useState<string | null>(null); // Estado para el nombre del país
-    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
     const [username, setUsername] = useState("");
+
+    const openModal = () => {
+        const modal = document.getElementById('userEditModal') as HTMLDialogElement | null;
+    
+        if (modal) {
+          modal.showModal();
+        }
+      }
     
     useEffect(() => {
         async function getUserFromStorage() {
@@ -90,9 +97,9 @@ export const UserPage = () => {
         <div className="card w-[40%] pb-[5%] h-full overflow-auto shadow-xl">
 
             {user1 ? (
-                <div className='bg-primary w-[40%] flex gap-5 fixed z-10 rounded-xl'>
+                <div className='bg-primary w-[40%] h-auto flex gap-5 fixed z-10 rounded-xl'>
                     <img
-                        src="/eula.jpg"
+                        src="/user.svg"
                         className='rounded-xl'
                         width={"20%"}
                         alt="Profile Picture"
@@ -103,13 +110,11 @@ export const UserPage = () => {
                                 <h2 className="card-title font-bold self-start text-white">
                                     {user1.first_name} {user1.last_name}
                                 </h2>
-                                {user1.verified && (
-                                    <img
-                                        src="/verified.png"
-                                        alt="Ícono de cuenta verificada"
-                                        width={"5%"}
-                                    />
-                                )}
+                                <img
+                                    src={user1.verified ? "/verified.png" : "/nothing.png"}
+                                    alt="Ícono de cuenta verificada"
+                                    width={"5%"}
+                                />
                             </div>
                             <p>{user1.user_name}</p>
                         </div>
@@ -117,20 +122,18 @@ export const UserPage = () => {
                             <p>Seguidores: {user1.followers}</p>
                             <p>Seguidos: {user1.following}</p>
                             <p>Nacido: {user1.born}</p>
-                            <p>Género: {user1.gender}</p>
+                            <p>Género: {user1.genre}</p>
                             <p>País: {countryName || "No especificado"}</p>
                         </div>
 
                         <button
-                            className="btn btn-accent mt-4 px-1 py-0 text-sm text-white"
-                            onClick={() => setIsModalOpen(true)} // Abrir el modal
+                            className="btn btn-neutral m-5 self-end px-1 py-0 text-sm text-white"
+                            onClick={openModal} // Abrir el modal
                         >
                             Editar
                         </button>
 
                         <EditUserModal
-                            isOpen={isModalOpen}
-                            onClose={() => setIsModalOpen(false)}
                             onSave={handleSaveData}
                             username={username} 
                         />
@@ -147,7 +150,7 @@ export const UserPage = () => {
                         <div className='card bg-base-200 mb-[2%] w-[100%] shadow-xl' key={index}>
                             <div className="card-body flex flex-row items-center">
                                 <img
-                                    src="/eula.jpg"
+                                    src="/user.svg"
                                     className="rounded-[50%]"
                                     alt="User PFP"
                                     width={70}
@@ -171,19 +174,45 @@ export const UserPage = () => {
                                         </p>
                                     )}
                                     <div className="card-actions justify-end">
-                                        <button className="text-gray-500 hover:text-blue-500">
-                                            👍 {post.post.likes}
-                                        </button>
-                                        <button className="text-gray-500 hover:text-red-500">
-                                            👎 {post.post.dislikes}
-                                        </button>
+                                    <button className='pr-5'>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="h-6 w-6"
+                                            fill="none"
+                                            viewBox="0 0 512 512"
+                                            stroke="currentColor">
+                                            <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            fill='white'
+                                            d= {"M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"} />
+                                        </svg>
+                                        {post.post.likes}
+                                    </button>
+                                    <button>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="h-6 w-6"
+                                            fill="none"
+                                            viewBox="0 0 512 512"
+                                            stroke="currentColor">
+                                            <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            fill='white'
+                                            d= {"M313.4 479.1c26-5.2 42.9-30.5 37.7-56.5l-2.3-11.4c-5.3-26.7-15.1-52.1-28.8-75.2l144 0c26.5 0 48-21.5 48-48c0-18.5-10.5-34.6-25.9-42.6C497 236.6 504 223.1 504 208c0-23.4-16.8-42.9-38.9-47.1c4.4-7.3 6.9-15.8 6.9-24.9c0-21.3-13.9-39.4-33.1-45.6c.7-3.3 1.1-6.8 1.1-10.4c0-26.5-21.5-48-48-48l-97.5 0c-19 0-37.5 5.6-53.3 16.1L202.7 73.8C176 91.6 160 121.6 160 153.7l0 38.3 0 48 0 24.9c0 29.2 13.3 56.7 36 75l7.4 5.9c26.5 21.2 44.6 51 51.2 84.2l2.3 11.4c5.2 26 30.5 42.9 56.5 37.7zM32 384l64 0c17.7 0 32-14.3 32-32l0-224c0-17.7-14.3-32-32-32L32 96C14.3 96 0 110.3 0 128L0 352c0 17.7 14.3 32 32 32z"} />
+                                        </svg>
+                                        {post.post.dislikes}
+                                    </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <p>No se encontró ningún post</p>
+                    <p className='mt-10'>No se encontró ningún post</p>
                 )}
             </div>
         </div>

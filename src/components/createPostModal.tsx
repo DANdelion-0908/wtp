@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createPost } from '@/app/functions/posts';
 
 export const CreatePostModal = () => {
   // Atributos de un post. Obtenido de Notion.
   const [postTitle, setPostTitle] = useState("");
-  const [postImage, setPostImage] = useState("");
+  const [postImage] = useState("");
   const [postText, setPostText] = useState("");
   const [postTopics, setPostTopics] = useState("");
 
