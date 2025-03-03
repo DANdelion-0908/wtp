@@ -29,7 +29,7 @@ export const RightSideMenu = () => {
         className='w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white'
       />
 
-      <div className='mt-4'>
+      <div className='mt-4 overflow-y-auto max-h-[80vh]'>
         {searchResults.map((post, index) => (
           <PostCard key={index} post={post} /> // Usa el componente PostCard
         ))}
