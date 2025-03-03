@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPostsByUser } from '@/app/functions/user';
+import { EditUserModal } from './EditUserModal';
 
 interface User {
     password: string;
@@ -41,7 +42,9 @@ export const UserPage = () => {
     const [country, setCountry] = useState<Country | null>(null); // Estado para el país
     const [posts1, setPosts1] = useState<Post[] | null>(null); // Estado para los posts
     const [countryName, setCountryName] = useState<string | null>(null); // Estado para el nombre del país
-
+    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
+    const [username, setUsername] = useState("");
+    
     useEffect(() => {
         async function getUserFromStorage() {
             const userJSON = localStorage.getItem("user");
@@ -49,7 +52,8 @@ export const UserPage = () => {
             const userName = localStorage.getItem("userName");
 
             if (userJSON && userName) {
-                const userData = JSON.parse(userJSON); // Convertir de JSON a objeto
+                const userData = JSON.parse(userJSON);
+                setUsername(userData.user_name); // Convertir de JSON a objeto
                 const countryData = countryJSON ? JSON.parse(countryJSON) : null; // Convertir de JSON a objeto (si existe)
                 console.log("Usuario desde localStorage:", userData);
                 console.log("País desde localStorage:", countryData);
@@ -76,13 +80,19 @@ export const UserPage = () => {
         getUserFromStorage();
     }, []);
 
+    const handleSaveCountry = (countryId: number, countryName: string) => {
+        console.log("País seleccionado (ID):", countryId);
+        console.log("Nombre del país:", countryName);
+        setCountryName(countryName); // Actualizar el nombre del país en la interfaz
+    };
+
     return (
         <div className="card w-[40%] pb-[5%] h-full overflow-auto shadow-xl">
-            
+
             {user1 ? (
                 <div className='bg-primary w-[40%] flex gap-5 fixed z-10 rounded-xl'>
                     <img
-                        src="/eula.jpg" 
+                        src="/eula.jpg"
                         className='rounded-xl'
                         width={"20%"}
                         alt="Profile Picture"
@@ -110,6 +120,20 @@ export const UserPage = () => {
                             <p>Género: {user1.gender}</p>
                             <p>País: {countryName || "No especificado"}</p>
                         </div>
+
+                        <button
+                            className="btn btn-accent mt-4 px-1 py-0 text-sm text-white"
+                            onClick={() => setIsModalOpen(true)} // Abrir el modal
+                        >
+                            Editar
+                        </button>
+
+                        <EditUserModal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                            onSave={handleSaveCountry}
+                            username={username} 
+                        />
                     </div>
                 </div>
             ) : (
@@ -123,7 +147,7 @@ export const UserPage = () => {
                         <div className='card bg-base-200 mb-[2%] w-[100%] shadow-xl' key={index}>
                             <div className="card-body flex flex-row items-center">
                                 <img
-                                    src="/eula.jpg" 
+                                    src="/eula.jpg"
                                     className="rounded-[50%]"
                                     alt="User PFP"
                                     width={70}
