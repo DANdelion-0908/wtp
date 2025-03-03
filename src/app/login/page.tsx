@@ -23,27 +23,30 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
-            
             const response = await fetchUser(userName);
-
+    
             if (response.message === "User found") {
                 const user = response.user;
-                
+                const userCountry = response.country;
+    
                 if (user && user.password === password) {
-                    localStorage.setItem("user", user); 
-                    setUserAuth(true); 
-                    setError(""); 
+                    // Convertir el objeto user a JSON y almacenarlo en localStorage
+                    localStorage.setItem("user", JSON.stringify(user));
+                    localStorage.setItem("userName", user.user_name);
+                    localStorage.setItem("userCountry", JSON.stringify(userCountry)); // Si country es un objeto
+                    setUserAuth(true);
+                    setError("");
                 } else {
-                    setError("Contraseña incorrecta"); 
+                    setError("Contraseña incorrecta");
                 }
             } else if (response.message === "User not found") {
                 setError("Usuario no encontrado");
             } else {
-                setError("Respuesta inesperada del servidor"); 
+                setError("Respuesta inesperada del servidor");
             }
         } catch (error) {
             console.error("Error al buscar el usuario:", error);
-            setError("Error al buscar el usuario. Inténtalo de nuevo."); 
+            setError("Error al buscar el usuario. Inténtalo de nuevo.");
         }
     };
 

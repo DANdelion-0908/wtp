@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { fetchPostsByUser } from '@/app/functions/user';
 
 export const UserPage = () => {
     const [user, setUser] = useState({
@@ -29,6 +30,47 @@ export const UserPage = () => {
             "hashtags": ["greeting", "new", "UwU"]
           }
     ]);
+
+    const [user1, setUser1] = useState(null);
+    const [country, setCountry] = useState(null);
+    const [posts1, setPosts1] = useState(null);
+    const [countryName, setCountryName] = useState(null);
+
+
+    useEffect(() => {
+        async function getUserFromStorage() {
+            const userJSON = localStorage.getItem("user");
+            const countryJSON = localStorage.getItem("userCountry");
+            const userName = localStorage.getItem("userName");
+    
+            if (userJSON && userName) {
+                const userData = JSON.parse(userJSON); // Convertir de JSON a objeto
+                const countryData = countryJSON ? JSON.parse(countryJSON) : null; // Convertir de JSON a objeto (si existe)
+                console.log("Usuario desde localStorage:", userData);
+                console.log("País desde localStorage:", countryData);
+    
+                setUser1(userData);
+                setCountry(countryData);
+    
+                // Guardar el nombre del país o null si no existe
+                setCountryName(countryData ? countryData.name : null);
+    
+                try {
+                    const userPosts = await fetchPostsByUser(userName);
+                    const postssss = userPosts.posts
+                    setPosts1(postssss);
+                    console.log("Posts del usuario:", postssss);
+                } catch (error) {
+                    console.error("Error al obtener los posts del usuario:", error);
+                }
+            } else {
+                console.log("No hay usuario en localStorage");
+            }
+        }
+    
+        getUserFromStorage();
+    }, []);
+
 
     return (
         <div className="card w-[40%] pb-[5%] h-full overflow-auto shadow-xl">
