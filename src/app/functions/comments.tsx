@@ -22,3 +22,18 @@
 
     }
   }
+
+  export async function createComment(text: string, reposted: boolean, postId: number, username: string, writterIsActive: boolean, isPinned: boolean, language: string) {
+    try {
+        const response = await fetch(`https://backend-wtp.vercel.app/api/comment`, {
+          method: 'POST',
+          body: JSON.stringify({ text, reposted, postId, username, writterIsActive, isPinned, language })
+        });    
+        
+        console.log(response.status);
+    
+        } catch (error) {
+            console.error("Error al hacer la solicitud:", error);
+    
+        }
+}

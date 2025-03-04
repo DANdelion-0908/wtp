@@ -53,7 +53,7 @@ export default function CommentInteraction({
 
   return (
       <div className="flex w-full justify-start ml-[2%] pb-[1%]">
-        <button onClick={handleLike}>
+        <button title='like' onClick={handleLike}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -69,7 +69,7 @@ export default function CommentInteraction({
             </svg>
         </button>
         <div className="divider divider-horizontal">{likes}</div>
-        <button onClick={handleDislike}>
+        <button title='dislike' onClick={handleDislike}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -85,7 +85,7 @@ export default function CommentInteraction({
             </svg>
         </button>
         <div className="divider divider-horizontal"></div>
-        <button onClick={handleShare}>
+        <button title='share' onClick={handleShare}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"

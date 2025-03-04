@@ -1,14 +1,45 @@
-import React, { useState } from 'react';
+import { dislikePost, likePost } from '@/app/functions/posts';
+import React, { useEffect, useState } from 'react';
+
+function getBrowserType() {
+    const test = regexp => {
+      return regexp.test(navigator.userAgent);
+    };
+  
+    console.log(navigator.userAgent);
+  
+    if (test(/opr\//i) || !!window.opr) {
+      return 'Opera';
+    } else if (test(/edg/i)) {
+      return 'Microsoft Edge';
+    } else if (test(/chrome|chromium|crios/i)) {
+      return 'Google Chrome';
+    } else if (test(/firefox|fxios/i)) {
+      return 'Mozilla Firefox';
+    } else if (test(/safari/i)) {
+      return 'Apple Safari';
+    } else if (test(/trident/i)) {
+      return 'Microsoft Internet Explorer';
+    } else if (test(/ucbrowser/i)) {
+      return 'UC Browser';
+    } else if (test(/samsungbrowser/i)) {
+      return 'Samsung Browser';
+    } else {
+      return 'Unknown browser';
+    }
+
+}
 
 export const PostInteraction = ({
-  handleComments,
-  likesCount: initialLikes,
-  disLikesCount: initialDislikes,
-  sharedCount: initialShares,
-  isLiked: initialIsLiked,
-  isDisliked: initialIsDisliked,
+    handleComments,
+    post: initialPost,
+    likesCount: initialLikes,
+    disLikesCount: initialDislikes,
+    sharedCount: initialShares,
+    isLiked: initialIsLiked,
+    isDisliked: initialIsDisliked,
 }) => {
-  
+  const [post, setPost] = useState(initialPost);
   const [likes, setLikes] = useState(initialLikes);
   const [dislikes, setDislikes] = useState(initialDislikes);
   const [shares, setShares] = useState(initialShares);
@@ -16,11 +47,11 @@ export const PostInteraction = ({
   const [isDisliked, setIsDisliked] = useState(initialIsDisliked);
 
   const handleLike = () => {
-
+    likePost(post.author.user_name, post.post.id, getBrowserType(), "???")
   };
 
   const handleDislike = () => {
-
+    dislikePost(post.author.user_name, post.post.id, getBrowserType(), "???")
   };
 
   const handleShare = () => {

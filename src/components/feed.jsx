@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import { PostInteraction } from './postInteraction';
 import CommentInteraction from './commentInteraction';
-import { fetchPosts } from '@/app/functions/posts';
-import { fetchComments } from '@/app/functions/comments';
+import { fetchPostByID, fetchPosts } from '@/app/functions/posts';
+import { createComment, fetchComments } from '@/app/functions/comments';
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -24,6 +24,10 @@ export default function Feed() {
 
     }
 
+  }
+
+  const commentCreation = () => {
+    createComment(commentText, false, )
   }
 
   useEffect(() => {
@@ -70,6 +74,7 @@ export default function Feed() {
               <div className="divider divider-info w-[98%] self-center"></div>
               <PostInteraction
                 handleComments={handleComments}
+                post={post}
                 likesCount={post.post.likes}
                 disLikesCount={post.post.dislikes}
                 isLiked={false}
@@ -112,7 +117,7 @@ export default function Feed() {
                     className="textarea textarea-bordered w-full bg-base-900 h-auto textarea-lg"
                     placeholder="Escribe aquí">
                   </textarea>
-                  <button type='submit' onClick={() => console.log("Comentario publicado: ", commentText)} className="btn btn-primary mt-[3%]">Publicar comentario</button>
+                  <button type='submit' onClick={() => commentCreation(selectedPost.id)} className="btn btn-primary mt-[3%]">Publicar comentario</button>
                 </form>
               </div>
               <h1 className='ml-[2%] text-3xl font-bold'>Comentarios</h1>

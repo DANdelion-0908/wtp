@@ -5,7 +5,6 @@ import { createPost } from '@/app/functions/posts';
 
 export const CreatePostModal = () => {
   // Atributos de un post. Obtenido de Notion.
-  const [postTitle, setPostTitle] = useState("");
   const [postImage] = useState("");
   const [postText, setPostText] = useState("");
   const [postTopics, setPostTopics] = useState("");
@@ -31,19 +30,17 @@ export const CreatePostModal = () => {
 
     const parsedTopics = postTopics.split(",");
 
-    if (!postTitle.trim() || !postText.trim()){
+    if (!postText.trim()){
       alert("Asegúrate de llenar todos los campos.");
       return;
     }
 
     console.log("Post enviado: ", {
-      title: postTitle,
       text: postText
     })
 
     createPost(localStorage.getItem("userName"), postText, postImage, parsedTopics, 0);
 
-    setPostTitle("");
     setPostText("");
     closeModal();
   }
@@ -57,13 +54,6 @@ export const CreatePostModal = () => {
             <form method="dialog" className='h-full'>
               <h3 className="font-bold text-2xl mb-[2.5%]">Publicar</h3>
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-              <input
-                type="text"
-                value={postTitle}
-                onChange={(e) => setPostTitle(e.target.value)}
-                placeholder="Título"
-                className="input input-bordered bg-gray-900 mb-[5%] w-full"
-              />
               <label>Escribe tu post:</label>
               <textarea
                 value={postText}

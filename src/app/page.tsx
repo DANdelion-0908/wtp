@@ -1,14 +1,12 @@
 'use client'
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Login from "./login/page";
 
 function Home() {
-  const router = useRouter();
 
   return (
     <>
-      {router.push('login')}
+      <Login/>
     </>
   );
 }

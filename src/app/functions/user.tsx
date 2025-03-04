@@ -1,3 +1,5 @@
+import { json } from "stream/consumers";
+
 export async function fetchPostsByUser(user: string) {
     try {
     const response = await fetch(`https://backend-wtp.vercel.app/api/get-posts-user/${user}`);    
@@ -34,9 +36,24 @@ export async function fetchUser(userName: string) {
         }
     
         return user;
+
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+
+    }
+}
+
+export async function registerUser(userName: string, password: string, email: string, born: string, first_name: string, last_name: string, gender: string) {
+    try {
+        const response = await fetch(`https://backend-wtp.vercel.app/api/registerUser`, {
+            method: 'POST',
+            body: JSON.stringify({ userName, password, email, born, first_name, last_name, gender })
+        });    
+
+        console.log(response.status);
     
-        } catch (error) {
-            console.error("Error al hacer la solicitud:", error);
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
     
-        }
+    }
 }
