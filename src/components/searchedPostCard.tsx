@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { deletePost } from '@/app/functions/posts';
+import { followUser } from '@/app/functions/user';
 
 // Definimos las interfaces
 interface Author {
@@ -48,10 +49,21 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       }
     }
 
+  const handleFollowUser = async () => {
+    const followerUsername  = localStorage.getItem("userName");
+    const followedUsername = post.author.user_name;
+
+    const body = JSON.stringify({  followerUsername, followedUsername, "followType": "casual" });
+    const response = await followUser(body);
+
+    console.log(response);
+    window.location.reload();
+  }
+
   return (
     <div className='bg-base-100 text-white rounded-lg shadow-md p-4 mb-4'>
       {/* Información del autor */}
-      <div className='flex items-center mb-4'>
+      <div className='flex items-center mb-4 justify-around'>
         <div className='bg-black rounded-full w-10 h-10 flex items-center justify-center'>
           <span className='text-lg'>
             {post.author.user_name[0]} {/* Muestra la primera letra del nombre de usuario */}
@@ -61,6 +73,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <p className='font-semibold'>{post.author.user_name}</p>
           <p className='text-sm'>{post.author.first_name} {post.author.last_name}</p>
         </div>
+        {post.author.user_name != localStorage.getItem("userName") && <button className='btn btn-primary' onClick={handleFollowUser}>Seguir</button>}
       </div>
 
       {/* Contenido del post */}

@@ -25,7 +25,7 @@ export const CreatePostModal = () => {
     }
   }
 
-  const handlePostSubmit = (e: React.FormEvent) => {
+  const handlePostSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const parsedTopics = postTopics.split(",");
@@ -35,9 +35,9 @@ export const CreatePostModal = () => {
       return;
     }
 
-    createPost(localStorage.getItem("userName"), postText, postImage, parsedTopics);
+    const response = await createPost(localStorage.getItem("userName"), postText, postImage, parsedTopics);
 
-    console.log("Post enviado: ", {
+    console.log("Post enviado: ", response, {
       user: localStorage.getItem("userName"),
       text: postText,
       image: postImage,
@@ -47,6 +47,7 @@ export const CreatePostModal = () => {
 
     setPostText("");
     closeModal();
+    window.location.reload();
   }
 
   return (

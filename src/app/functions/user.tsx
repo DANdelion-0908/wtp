@@ -59,3 +59,22 @@ export async function registerUser(body: any) {
     
     }
 }
+
+export async function followUser(body: any) {
+    console.log(body);
+    try {
+        const response = await fetch(`https://backend-wtp.vercel.app/api/follow`, {
+            headers: {
+                "Content-Type": "application/json",
+              },
+            method: 'POST',
+            body: body
+        });    
+
+        return response;
+
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+    
+    }
+}

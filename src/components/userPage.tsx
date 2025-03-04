@@ -171,7 +171,7 @@ export const UserPage = () => {
                                         <img
                                             src={post.post.imagen}
                                             alt="Post"
-                                            className="w-[30%] h-auto rounded-lg"
+                                            className="w-[50%] h-auto rounded-lg"
                                         />
                                     )}
                                     {post.post.hashtags && (
