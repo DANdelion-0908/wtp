@@ -40,7 +40,7 @@ interface Post {
 
 export const UserPage = () => {
     const [user1, setUser1] = useState<User | null>(null); // Estado para el usuario
-    const [country, setCountry] = useState<Country | null>(null); // Estado para el país
+    const [, setCountry] = useState<Country | null>(null); // Estado para el país
     const [posts1, setPosts1] = useState<Post[] | null>(null); // Estado para los posts
     const [countryName, setCountryName] = useState<string | null>(null); // Estado para el nombre del país
     const [username, setUsername] = useState("");
@@ -53,7 +53,7 @@ export const UserPage = () => {
         }
       }
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id: number) => {
     const answer = confirm("¿Seguro que quieres eliminar el post?")
     console.log(answer)
         if (answer) {

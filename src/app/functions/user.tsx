@@ -78,3 +78,45 @@ export async function followUser(body: any) {
     
     }
 }
+
+export async function checkFollowRelation(user1Name, user2Name) {
+    try {
+      const response = await fetch('https://backend-wtp.vercel.app/api/checkFollowsRelation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user1Name, user2Name }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      return data.followsRelationExists;
+      
+    } catch (error) {
+      console.error("Error al verificar la relación:", error);
+      return false;
+    }
+  };
+
+export async function unfollowUser(body: any) {
+    console.log(body);
+    try {
+        const response = await fetch(`https://backend-wtp.vercel.app/api/unfollowUser`, {
+            headers: {
+                "Content-Type": "application/json",
+              },
+            method: 'POST',
+            body: body
+        });    
+
+        return response;
+
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+    
+    }
+}

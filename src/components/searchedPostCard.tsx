@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { deletePost } from '@/app/functions/posts';
-import { followUser } from '@/app/functions/user';
+import { checkFollowRelation, followUser, unfollowUser } from '@/app/functions/user';
 
 // Definimos las interfaces
 interface Author {
@@ -49,6 +49,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       }
     }
 
+    const [relation, setRelation] = useState(false);
+
   const handleFollowUser = async () => {
     const followerUsername  = localStorage.getItem("userName");
     const followedUsername = post.author.user_name;
@@ -60,6 +62,31 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     window.location.reload();
   }
 
+  const handleunfollowUser = async () => {
+    const followerName  = localStorage.getItem("userName");
+    const followedName = post.author.user_name;
+
+    const body = JSON.stringify({  followerName, followedName });
+    const response = await unfollowUser(body);
+
+    console.log(response);
+    window.location.reload();
+  }
+
+  useEffect(() => {
+    const checkRelation = async () => {
+      const user1Name = localStorage.getItem("userName");
+      const user2Name = post.author.user_name;
+      const response = await checkFollowRelation(user1Name, user2Name);
+      
+      setRelation(response)
+      
+      console.log("Follows: ", response)
+    }
+    
+    checkRelation()
+  }, [post])
+    
   return (
     <div className='bg-base-100 text-white rounded-lg shadow-md p-4 mb-4'>
       {/* Información del autor */}
@@ -73,7 +100,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <p className='font-semibold'>{post.author.user_name}</p>
           <p className='text-sm'>{post.author.first_name} {post.author.last_name}</p>
         </div>
-        {post.author.user_name != localStorage.getItem("userName") && <button className='btn btn-primary' onClick={handleFollowUser}>Seguir</button>}
+        {post.author.user_name != localStorage.getItem("userName") && (relation === false ? <button className='btn btn-primary' onClick={handleFollowUser}>Follow</button> : <button className='btn btn-primary' onClick={handleunfollowUser}>Unfollow</button>)}
       </div>
 
       {/* Contenido del post */}
@@ -129,7 +156,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </svg>
           {post.post.dislikes}
       </button>
-      <button disabled={post.author.user_name === localStorage.getItem("userName") ? "" : "disabled716868"} onClick={handleDelete}>
+      <button disabled={post.author.user_name === localStorage.getItem("userName") ? "" : "disabled"} onClick={handleDelete}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
