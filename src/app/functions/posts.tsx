@@ -130,9 +130,6 @@ export async function deletePost(id: number) {
   try {
     const response = await fetch(`https://backend-wtp.vercel.app/api/deletepost/${id}`, { // Falta
       method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json'
-      },
     });
   
     if (!response.ok) {

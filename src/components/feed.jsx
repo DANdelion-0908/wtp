@@ -40,10 +40,22 @@ export default function Feed() {
     fetchData();
   }
 
+  const getPosts = () => {
+    const fetchData = async () => {
+      const data = await fetchPosts();
+      setPosts(data.posts);
+      console.log("hijnuyftvijufcervuij", data.posts);
+      
+    };
+
+    fetchData();
+  }
+
   const commentCreation = async (id) => {
     const response = await createComment(commentText, false, id, localStorage.getItem("userName"), true, false, "sp");
 
     if (response.ok) {
+      setCommentText("")
       getComments();
     }
   }
