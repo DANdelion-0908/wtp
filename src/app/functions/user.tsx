@@ -34,9 +34,28 @@ export async function fetchUser(userName: string) {
         }
     
         return user;
+
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
+
+    }
+}
+
+export async function registerUser(body: any) {
+    console.log(body);
+    try {
+        const response = await fetch(`https://backend-wtp.vercel.app/api/registerUser`, {
+            headers: {
+                "Content-Type": "application/json",
+              },
+            method: 'POST',
+            body: body
+        });    
+
+        return response;
+
+    } catch (error) {
+        console.error("Error al hacer la solicitud:", error);
     
-        } catch (error) {
-            console.error("Error al hacer la solicitud:", error);
-    
-        }
+    }
 }

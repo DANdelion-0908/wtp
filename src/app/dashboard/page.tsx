@@ -6,11 +6,9 @@ import { RightSideMenu } from '@/components/rightSideMenu'
 import { Header } from '@/components/header'
 import React, { useState } from 'react'
 import { UserPage } from '@/components/userPage'
-import { useRouter } from 'next/navigation'
 
 export default function Dashboard({ handleAuth }: any) {
   const [isProfileActive, setProfileActive] = useState(true);
-  const router = useRouter();
 
   const handleProfile = () => {
     switch (isProfileActive) {
