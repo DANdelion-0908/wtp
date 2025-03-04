@@ -40,8 +40,10 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ onSave, username }
             if (selectedCountryData) {
 
                 await changeUserCountry(username, selectedCountryData.name)
+                localStorage.setItem('userCountry', JSON.stringify(selectedCountryData))
                 onSave(selectedCountry, selectedCountryData.name); // Devolver el ID y el nombre del país
                 document.getElementById('userEditModal').close()
+
             }
         } else {
             alert("Por favor, selecciona un país.");

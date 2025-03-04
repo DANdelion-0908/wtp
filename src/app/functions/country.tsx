@@ -15,6 +15,8 @@ export async function fetchCountries() {
 export async function changeUserCountry(user_name: string, newCountry: string): Promise<any> {
     const url = "https://backend-wtp.vercel.app/api/change-user-country";
     const body = { user_name, newCountry };
+
+    console.log("changeeee: ", body)
   
     const response = await fetch(url, {
       method: "POST",
