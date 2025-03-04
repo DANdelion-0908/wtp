@@ -18,9 +18,11 @@ export const Header = ({handleProfile, setProfileActive, handleAuth}) => {
                     <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                        <img
-                            alt="Tailwind CSS Navbar component"
-                            src="/user.svg" />
+                        <div className='bg-black rounded-full w-10 h-10 flex items-center justify-center'>
+                        <span className='text-lg'>
+                            {localStorage.getItem("userName")[0]} {/* Muestra la primera letra del nombre de usuario */}
+                        </span>
+                        </div>
                         </div>
                     </div>
                     <ul

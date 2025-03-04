@@ -1,5 +1,3 @@
-import { json } from "stream/consumers";
-
 export async function fetchPostsByUser(user: string) {
     try {
     const response = await fetch(`https://backend-wtp.vercel.app/api/get-posts-user/${user}`);    
@@ -43,15 +41,19 @@ export async function fetchUser(userName: string) {
     }
 }
 
-export async function registerUser(userName: string, password: string, email: string, born: string, first_name: string, last_name: string, gender: string) {
+export async function registerUser(body: any) {
+    console.log(body);
     try {
         const response = await fetch(`https://backend-wtp.vercel.app/api/registerUser`, {
+            headers: {
+                "Content-Type": "application/json",
+              },
             method: 'POST',
-            body: JSON.stringify({ userName, password, email, born, first_name, last_name, gender })
+            body: body
         });    
 
-        console.log(response.status);
-    
+        return response;
+
     } catch (error) {
         console.error("Error al hacer la solicitud:", error);
     

@@ -15,9 +15,11 @@ export default function Feed() {
 
   const [comments, setComments] = useState([]);
 
-  const handleComments = () => {
+  const handleComments = (post) => {
+    setCommentText("")
     if (!isCommentActive) {
       setCommentActive(true);
+      setSelectedPost(post);
       
     } else {
       setCommentActive(false);
@@ -26,8 +28,24 @@ export default function Feed() {
 
   }
 
-  const commentCreation = () => {
-    createComment(commentText, false, )
+  const getComments = () => {
+    setComments([])
+    console.log("SELECCIONADO: ", selectedPost)
+    const fetchData = async () => {
+      const data = await fetchComments(selectedPost.post.id);
+      console.log("ñañañañañañ: ", data)
+      setComments(data.comments);
+    };
+
+    fetchData();
+  }
+
+  const commentCreation = async (id) => {
+    const response = await createComment(commentText, false, id, localStorage.getItem("userName"), true, false, "sp");
+
+    if (response.ok) {
+      getComments();
+    }
   }
 
   useEffect(() => {
@@ -42,14 +60,16 @@ export default function Feed() {
   }, []);
 
   useEffect(() => {
+    setComments([])
+    console.log("SELECCIONADO: ", selectedPost)
     const fetchData = async () => {
-      const data = await fetchComments(3019);
-      setComments(data);
+      const data = await fetchComments(selectedPost.post.id);
       console.log("ñañañañañañ: ", data)
+      setComments(data.comments);
     };
 
     fetchData();
-  }, [isCommentActive === true])
+  }, [selectedPost])
 
   return (
     <>
@@ -61,13 +81,11 @@ export default function Feed() {
           posts.map((post, index) => (
             <div className="card card-side bg-base-300 shadow-xl h-auto flex flex-col mb-[2%]" key={index}>
               <div className="card-body flex flex-row items-center">
-                <img
-                  src="/user.svg"
-                  className="rounded-[50%]"
-                  alt="User PFP"
-                  width={70}
-                  height={70}
-                />
+                <div className='bg-black rounded-full w-10 h-10 flex items-center justify-center'>
+                  <span className='text-lg'>
+                    {post.author.user_name[0]} {/* Muestra la primera letra del nombre de usuario */}
+                  </span>
+                </div>
                 <h3>{post.author.user_name}</h3>
               </div>
               <textarea readOnly value={post.post.text} className="textarea bg-inherit"></textarea>
@@ -88,22 +106,21 @@ export default function Feed() {
           <div>
             <div className="card card-side bg-base-300 shadow-xl h-auto flex flex-col mb-[8%]">
               <div className="card-body flex flex-row items-center">
-                <img
-                  src={selectedPost.profilePicture}
-                  className="rounded-[50%]"
-                  alt="User PFP"
-                  width={70}
-                  height={70}
-                />
-                <h3>{selectedPost.user}</h3>
+              <div className='bg-black rounded-full w-10 h-10 flex items-center justify-center'>
+                <span className='text-lg'>
+                  {selectedPost.author.user_name[0]} {/* Muestra la primera letra del nombre de usuario */}
+                </span>
               </div>
-              <h2 className="card-title ml-5">{selectedPost.title}</h2>
-              <textarea readOnly value={selectedPost.body} className="textarea bg-inherit"></textarea>
+              <h3>{selectedPost.author.user_name}</h3>
+              </div>
+              <textarea readOnly value={selectedPost.post.text} className="textarea bg-inherit"></textarea>
               <div className="divider divider-info w-[98%] self-center"></div>
               <PostInteraction
                 handleComments={handleComments}
-                likesCount={selectedPost.likesCount - selectedPost.dislikesCount}
-                sharedCount={selectedPost.sharedCount}
+                post={selectedPost}
+                likesCount={selectedPost.post.likes}
+                dislikesCount={selectedPost.post.dislikes}
+                sharedCount={selectedPost.post.reposted}
                 isLiked={false}
                 isDisliked={false}
               />
@@ -117,34 +134,34 @@ export default function Feed() {
                     className="textarea textarea-bordered w-full bg-base-900 h-auto textarea-lg"
                     placeholder="Escribe aquí">
                   </textarea>
-                  <button type='submit' onClick={() => commentCreation(selectedPost.id)} className="btn btn-primary mt-[3%]">Publicar comentario</button>
+                  {console.log(selectedPost.post)}
+                  <button type='submit' onClick={() => commentCreation(selectedPost.post.id)} className="btn btn-primary mt-[3%]">Publicar comentario</button>
                 </form>
               </div>
               <h1 className='ml-[2%] text-3xl font-bold'>Comentarios</h1>
+              {console.log("Comentarios", comments)}
               {/* Mostrar los comentarios si existen */}
-              {comments && comments.length > 0 ? (
+              {comments.length > 0 ? (
                 comments.map((singleComment, index) => (
                   <div className="card card-side bg-inherit shadow-xl h-auto flex flex-col rounded-none" key={index}>
                     <div className="divider divider-info w-[98%] self-center"></div>
                     <div className="card-body flex flex-row items-center">
-                      <img
-                        src={singleComment.profilePicture}
-                        className="rounded-[50%]"
-                        alt="User PFP"
-                        width={70}
-                        height={70}
-                      />
-                      <h3>{singleComment.user}</h3>
+                    <div className='bg-black rounded-full w-10 h-10 flex items-center justify-center'>
+                      <span className='text-lg'>
+                        {singleComment.author.user_name[0]} {/* Muestra la primera letra del nombre de usuario */}
+                      </span>
                     </div>
-                    <textarea readOnly value={singleComment.text} className="textarea bg-inherit"></textarea>
+                      <h3>{singleComment.author.user_name}</h3>
+                    </div>
+                    <textarea readOnly value={singleComment.comment.text} className="textarea bg-inherit"></textarea>
                     <div className="divider divider-primary w-[98%] self-center"></div>
                     <CommentInteraction
                       handleComments={handleComments}
-                      likesCount={singleComment.likesCount - singleComment.disLikesCount}
+                      likesCount={singleComment.comment.likes}
                       sharedCount={singleComment.sharedCount}
                       isLiked={false}
-                      isDisliked={true} // Setear correctamente
-                    />
+                      isDisliked={false} // Setear correctamente
+                      />
                   </div>
                 ))
               ) : (

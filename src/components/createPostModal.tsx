@@ -5,7 +5,7 @@ import { createPost } from '@/app/functions/posts';
 
 export const CreatePostModal = () => {
   // Atributos de un post. Obtenido de Notion.
-  const [postImage] = useState("");
+  const [postImage, setPostImage] = useState("");
   const [postText, setPostText] = useState("");
   const [postTopics, setPostTopics] = useState("");
 
@@ -35,11 +35,15 @@ export const CreatePostModal = () => {
       return;
     }
 
+    createPost(localStorage.getItem("userName"), postText, postImage, parsedTopics);
+
     console.log("Post enviado: ", {
-      text: postText
+      user: localStorage.getItem("userName"),
+      text: postText,
+      image: postImage,
+      topics: parsedTopics
     })
 
-    createPost(localStorage.getItem("userName"), postText, postImage, parsedTopics, 0);
 
     setPostText("");
     closeModal();
@@ -61,6 +65,14 @@ export const CreatePostModal = () => {
                 className="textarea bg-gray-900 mb-[5%] marker:textarea-bordered w-full h-[20em] textarea-lg"
                 placeholder="Escribe aquí">
               </textarea>
+              <label>Escribe la direccion de la imagen:</label>
+              <input
+                type="text"
+                value={postImage}
+                onChange={(e) => setPostImage(e.target.value)}
+                placeholder="https://imagen.com"
+                className="input input-bordered mb-[2%] bg-gray-900 w-full"
+              />
               <label>Ingresa los temas separados por comas: </label>
               <input
                 type="text"

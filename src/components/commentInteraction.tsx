@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 interface CommentInteractionProps {
-  handleComments: () => void,
   likesCount: number;
   sharedCount: number;
   isLiked: boolean;
@@ -9,7 +8,6 @@ interface CommentInteractionProps {
 }
 
 export default function CommentInteraction({
-  handleComments,
   likesCount: initialLikes,
   sharedCount: initialShares,
   isLiked: initialIsLiked,

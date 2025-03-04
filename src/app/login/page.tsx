@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../dashboard/page';
 import { fetchUser } from '../functions/user';
-import Signup from '../signup/page';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
@@ -63,7 +62,7 @@ export default function Login() {
     return (
         <>
             {isUserAuth === false ? (
-                <div className="hero min-h-screen fixed">
+                <div className="hero min-h-screen bg-base-100">
                     <div className="hero-content w-[60%] h-auto flex-col">
                         <div className="card w-full h-full">
                             <div className='flex flex-col text-start gap-10'>

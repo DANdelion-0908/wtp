@@ -97,19 +97,16 @@ export const UserPage = () => {
         <div className="card w-[40%] pb-[5%] h-full overflow-auto shadow-xl">
 
             {user1 ? (
-                <div className='bg-primary w-[40%] h-auto flex gap-5 fixed z-10 rounded-xl'>
-                    <img
-                        src="/user.svg"
-                        className='rounded-xl'
-                        width={"20%"}
-                        alt="Profile Picture"
-                    />
-                    <div className='flex flex-col justify-end items-start gap-[10%] w-full'>
+                <div className='bg-primary flex gap-5 p-3 items-center rounded-xl'>
+                    <div className='bg-black rounded-full w-[20%] h-[80%] flex items-center justify-center'>
+                    <span className='text-4xl'>
+                        {user1.user_name[0]} {/* Muestra la primera letra del nombre de usuario */}
+                    </span>
+                    </div>
+                    <div className='flex flex-col h-auto gap-[10%] w-full'>
                         <div className='flex flex-col gap-[1%]'>
                             <div className='flex'>
-                                <h2 className="card-title font-bold self-start text-white">
-                                    {user1.first_name} {user1.last_name}
-                                </h2>
+                                <h2 className="card-title font-bold self-start text-white">{user1.first_name} {user1.last_name}</h2>
                                 <img
                                     src={user1.verified ? "/verified.png" : "/nothing.png"}
                                     alt="Ícono de cuenta verificada"
@@ -118,16 +115,16 @@ export const UserPage = () => {
                             </div>
                             <p>{user1.user_name}</p>
                         </div>
-                        <div className='flex flex-wrap w-full gap-[5%]'>
+                        <div className='flex flex-wrap items-center w-full gap-[5%]'>
                             <p>Seguidores: {user1.followers}</p>
                             <p>Seguidos: {user1.following}</p>
                             <p>Nacido: {user1.born}</p>
-                            <p>Género: {user1.genre}</p>
+                            <p>Género: {user1.gender}</p>
                             <p>País: {countryName || "No especificado"}</p>
                         </div>
 
                         <button
-                            className="btn btn-neutral m-5 self-end px-1 py-0 text-sm text-white"
+                            className="btn btn-neutral self-end text-sm text-white"
                             onClick={openModal} // Abrir el modal
                         >
                             Editar
@@ -144,28 +141,26 @@ export const UserPage = () => {
             )}
 
             {/* los posssts */}
-            <div className="card-body bg-base-300 mt-[20%]">
+            <div className="card-body  bg-base-300">
                 {posts1 && posts1.length > 0 ? (
                     posts1.map((post, index) => (
                         <div className='card bg-base-200 mb-[2%] w-[100%] shadow-xl' key={index}>
-                            <div className="card-body flex flex-row items-center">
-                                <img
-                                    src="/user.svg"
-                                    className="rounded-[50%]"
-                                    alt="User PFP"
-                                    width={70}
-                                    height={70}
-                                />
+                            <div className="card-body flex flex-row items-center h-[1.5vh]">
+                            <div className='bg-black rounded-full w-10 h-10 flex items-center justify-center'>
+                                <span className='text-lg'>
+                                    {post.author.user_name[0]} {/* Muestra la primera letra del nombre de usuario */}
+                                </span>
+                                </div>
                                 <h3>{post.author.user_name}</h3>
                             </div>
-                            <div className="">
-                                <div className="card-body">
+                            <div>
+                                <div className="card-body items-center">
                                     <h2 className="card-title">{post.post.text}</h2>
                                     {post.post.imagen && (
                                         <img
                                             src={post.post.imagen}
                                             alt="Post"
-                                            className="w-full h-auto rounded-lg mb-4"
+                                            className="w-[30%] h-auto rounded-lg"
                                         />
                                     )}
                                     {post.post.hashtags && (
@@ -173,7 +168,7 @@ export const UserPage = () => {
                                             {post.post.hashtags}
                                         </p>
                                     )}
-                                    <div className="card-actions justify-end">
+                                    <div className="card-actions self-end justify-end">
                                     <button className='pr-5'>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

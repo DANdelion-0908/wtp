@@ -59,15 +59,18 @@ export async function fetchPostByID(postID: number) {
   }
 }
 
-export async function createPost(username: string | null, text: string, image: string, hashtags: string[], reposted: number) {
+export async function createPost(username: string | null, text: string, imagen: string, hashtags: string[]) {
   try {
     const response = await fetch(`https://backend-wtp.vercel.app/api/createPost`, { // Falta
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({ username, text, image, hashtags, reposted })
+      body: JSON.stringify({ username, text, imagen, hashtags })
     });
+
+    console.log("KAKAKAKA: ", username, text, imagen, hashtags);
+    return response;
   
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
@@ -93,6 +96,8 @@ export async function likePost(username: string, nodeId: number, browser: string
       throw new Error(`Error HTTP: ${response.status}`);
     }
 
+    return response;
+
   } catch (error) {
     console.error("Error al hacer la solicitud:", error);
 
@@ -112,6 +117,29 @@ export async function dislikePost(username: string, nodeId: number, browser: str
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
     }
+
+    return response;
+
+  } catch (error) {
+    console.error("Error al hacer la solicitud:", error);
+
+  }
+}
+
+export async function deletePost(id: number) {
+  try {
+    const response = await fetch(`https://backend-wtp.vercel.app/api/deletepost/${id}`, { // Falta
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      },
+    });
+  
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    return response;
 
   } catch (error) {
     console.error("Error al hacer la solicitud:", error);
