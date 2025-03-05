@@ -101,6 +101,7 @@ export default function Feed() {
                 <h3>{post.author.user_name}</h3>
               </div>
               <textarea readOnly value={post.post.text} className="textarea bg-inherit"></textarea>
+              <img src={post.post.imagen} alt="Imagen" className='w-[50%] self-center'/>
               <div className="divider divider-info w-[98%] self-center"></div>
               <PostInteraction
                 handleComments={handleComments}
@@ -126,6 +127,7 @@ export default function Feed() {
               <h3>{selectedPost.author.user_name}</h3>
               </div>
               <textarea readOnly value={selectedPost.post.text} className="textarea bg-inherit"></textarea>
+              <img src={selectedPost.post.imagen} alt="Imagen" className='w-[50%] self-center'/>
               <div className="divider divider-info w-[98%] self-center"></div>
               <PostInteraction
                 handleComments={handleComments}
@@ -169,6 +171,8 @@ export default function Feed() {
                     <div className="divider divider-primary w-[98%] self-center"></div>
                     <CommentInteraction
                       handleComments={handleComments}
+                      post={selectedPost}
+                      comment={singleComment}
                       likesCount={singleComment.comment.likes}
                       sharedCount={singleComment.sharedCount}
                       isLiked={false}

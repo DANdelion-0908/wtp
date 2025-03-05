@@ -82,14 +82,14 @@ export async function createPost(username: string | null, text: string, imagen: 
   }
 }
 
-export async function likePost(username: string, nodeId: number, browser: string, source: string) {
+export async function likePost(user_name: string, nodeId: number, browser: string, source: string) {
   try {
     const response = await fetch(`https://backend-wtp.vercel.app/api/likePost`, { // Falta
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({ username, nodeId, browser, source })
+      body: JSON.stringify({ user_name, nodeId, browser, source })
     });
   
     if (!response.ok) {
@@ -104,14 +104,14 @@ export async function likePost(username: string, nodeId: number, browser: string
   }
 }
 
-export async function dislikePost(username: string, nodeId: number, browser: string, source: string) {
+export async function dislikePost(user_name: string, nodeId: number, browser: string, source: string) {
   try {
     const response = await fetch(`https://backend-wtp.vercel.app/api/dislikePost`, { // Falta
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({ username, nodeId, browser, source })
+      body: JSON.stringify({ user_name, nodeId, browser, source })
     });
   
     if (!response.ok) {

@@ -41,3 +41,47 @@
     
         }
 }
+
+export async function likeComment(user_name: string, nodeId: number, browser: string, source: string) {
+  try {
+    const response = await fetch(`https://backend-wtp.vercel.app/api/likeComment`, { // Falta
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ user_name, nodeId, browser, source })
+    });
+  
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    return response;
+
+  } catch (error) {
+    console.error("Error al hacer la solicitud:", error);
+
+  }
+}
+
+export async function dislikeComment(user_name: string, nodeId: number, browser: string, source: string) {
+  try {
+    const response = await fetch(`https://backend-wtp.vercel.app/api/dislikeComment`, { // Falta
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ user_name, nodeId, browser, source })
+    });
+  
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    return response;
+
+  } catch (error) {
+    console.error("Error al hacer la solicitud:", error);
+
+  }
+}
