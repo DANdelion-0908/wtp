@@ -7,7 +7,7 @@ import { Header } from '@/components/header'
 import React, { useState } from 'react'
 import { UserPage } from '@/components/userPage'
 
-export default function Dashboard({ handleAuth }: any) {
+export default function Dashboard({ handleAuth }) {
   const [isProfileActive, setProfileActive] = useState(true);
 
   const handleProfile = () => {

@@ -1,4 +1,4 @@
-  export async function fetchComments(postID: number) {
+  export async function fetchComments(postID?: number) {
     try {
       const response = await fetch(`https://backend-wtp.vercel.app/api/get-comments/${postID}`);    
     
